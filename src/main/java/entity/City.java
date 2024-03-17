@@ -10,7 +10,16 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country countryId;
+
+    private String district;
+
+    private Integer population;
 
     @Override
     public boolean equals(Object o) {
@@ -24,13 +33,6 @@ public class City {
     public int hashCode() {
         return Objects.hash(id, name);
     }
-
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    private Country countryId;
-    private String district;
-
-    private Integer population;
 
     public Integer getId() {
         return id;

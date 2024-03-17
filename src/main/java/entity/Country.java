@@ -45,6 +45,17 @@ public class Country {
     @Column(name = "government_form")
     private String governmentForm;
 
+    @Column(name = "head_of_state")
+    private String headOfState;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "capital")
+    private City capital;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "country_id")
+    private Set<CountryLanguage> langusges;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,17 +68,6 @@ public class Country {
     public int hashCode() {
         return Objects.hash(id, name);
     }
-
-    @Column(name = "head_of_state")
-    private String headOfState;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "capital")
-    private City capital;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "country_id")
-    private Set<CountryLanguage> langusges;
 
     public Country() {
     }

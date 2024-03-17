@@ -23,9 +23,7 @@ public class CountryLanguage {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean isOfficial;
 
-
     private BigDecimal percentage;
-
 
     @Override
     public boolean equals(Object o) {
