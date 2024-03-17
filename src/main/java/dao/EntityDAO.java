@@ -32,7 +32,7 @@ public abstract class EntityDAO<T> {
 
     public Long getTotalCount() {
         Transaction transaction = getCurrentSession().beginTransaction();
-        Long singleResult = (Long) getCurrentSession().createQuery("SELECT count(*) FROM" + base.getName()).getSingleResult();
+        Long singleResult = (Long) getCurrentSession().createQuery("SELECT count(*) FROM " + base.getName()).getSingleResult();
         transaction.commit();
         return singleResult;
     }
