@@ -37,7 +37,7 @@ public abstract class EntityDAO<T> {
         return singleResult;
     }
 
-    public List<T> findAll() {
+    public List<T> fetchData() {
         List<T> resultList = new ArrayList<>();
         int step = 500;
         int totalCount = getTotalCount().intValue();
