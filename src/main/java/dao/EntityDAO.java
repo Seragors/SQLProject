@@ -45,7 +45,8 @@ public abstract class EntityDAO<T> {
         int totalCount = getTotalCount().intValue();
         Transaction transaction = getCurrentSession().beginTransaction();
         for (int i = 0; i < totalCount; i += step) {
-            resultList.addAll(getItems(i, step));
+            Query query = getCurrentSession().createQuery("SELECT c FROM City c ", base);
+            resultList.addAll(query.getResultList());
         }
         transaction.commit();
         return resultList;
@@ -58,7 +59,7 @@ public abstract class EntityDAO<T> {
 
     public List<T> findById(Integer id) {
         Transaction transaction = getCurrentSession().beginTransaction();
-        Query<T> query = getCurrentSession().createQuery("SELECT c FROM City c WHERE c.id = :id", base);
+        Query<T> query = getCurrentSession().createQuery("SELECT c FROM City c WHERE c.id = :id ", base);
         query.setParameter("id", id);
         City city = (City) query.getSingleResult();
         transaction.commit();
