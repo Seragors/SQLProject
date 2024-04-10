@@ -10,9 +10,11 @@ public class Menu {
     private static final int EXIT = 0;
     private static final int ALL_CITY = 1;
     private static final int CITY_ID = 2;
+    private static final int DELETE_ID = 3;
     private static final String MENU_SELECT = """
             1. All_City
             2. City_Id               
+            3. Delete_Id
             0. Exit
             """;
     private static boolean isRun = true;
@@ -36,7 +38,12 @@ public class Menu {
                 System.out.println("Enter the database ID");
                 int numberCityId = scanner.nextInt();
                 cityDAO.findById(numberCityId);
-            } else if (number == EXIT) {
+            } else if (number == DELETE_ID){
+                System.out.println(DELETE_ID);
+                System.out.println("Enter the database delete ID ");
+                int numberCityId = scanner.nextInt();
+                cityDAO.deleteById(numberCityId);
+            } else  if (number == EXIT) {
                 menuService.shutdown();
                 isRun = false;
                 System.out.println("By!");

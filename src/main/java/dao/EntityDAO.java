@@ -68,4 +68,12 @@ public abstract class EntityDAO<T> {
         transaction.commit();
         return (List<T>) List.of(city);
     }
+
+    public void deleteById(Integer id) {
+        Transaction transaction = getCurrentSession().beginTransaction();
+        Query<T> query = getCurrentSession().createQuery("DELETE FROM City c WHERE c.id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
+        transaction.commit();
+    }
 }
