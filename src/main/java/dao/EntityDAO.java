@@ -1,9 +1,7 @@
 package dao;
 
 import entity.City;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
@@ -40,12 +38,18 @@ public abstract class EntityDAO<T> {
 
     public List<T> fetchData() {
         List<T> resultList = new ArrayList<>();
-        int step = 500;
         int totalCount = getTotalCount().intValue();
         Transaction transaction = getCurrentSession().beginTransaction();
-        for (int i = 0; i < totalCount; i += step) {
-            Query query = getCurrentSession().createQuery("SELECT c FROM City c ", base);
-            resultList.addAll(query.getResultList());
+        Query query = getCurrentSession().createQuery("SELECT c FROM City c ", base);
+        ScrollableResults resultScroll = query.scroll(ScrollMode.FORWARD_ONLY);
+        if (resultScroll.next()) {
+            int step = 0;
+            while (totalCount > step++) {
+                resultList.add(((T) resultScroll.get(0)));
+                if (!resultScroll.next()) {
+                    break;
+                }
+            }
         }
         transaction.commit();
         return resultList;
